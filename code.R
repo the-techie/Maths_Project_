@@ -8,27 +8,6 @@ years
 
 pupose = unique(df1$Pupose)
 
-total_crimes = c()
-
-for(x in states){
-  data = subset(df1, df1$STATE.UT == x & df1$YEAR == 2001 & df1$Pupose == "Total")
-  print(x)
-  k = data$Grand.Total
-  
-  if(length(k) == 0){
-    k = 0
-  }
-  
-  print(k)
-  
-  total_crimes = c(total_crimes, k)
-  
-}
-palette <- RColorBrewer::brewer.pal(length(states),name = 'YlOrRd')
-
-barplot(total_crimes, names.arg = states, las=2, cex.names = 0.57, xlab = "State",
-        ylab = "Crimes", main = "Statewise total cases in 2002", col = palette)
-
 # all using functions
 getGraph <- function(year){
   total_crimes = c()
@@ -59,7 +38,7 @@ for(x in years_correct){
   getGraph(x)
 }
 
-
+# stacked barplot
 
 total_cases = list()
 
@@ -68,7 +47,12 @@ getValues <- function(year){
   
   for(x in states){
     data = subset(df1, df1$STATE.UT == x & df1$YEAR == year & df1$Pupose == "Total")
-    total_crimes = c(total_crimes, data$Grand.Total)
+    k = data$Grand.Total
+    
+    if(length(k) == 0){
+      k = 0
+    }
+    total_crimes = c(total_crimes, k)
   }
   return(total_crimes)
 }
@@ -85,7 +69,7 @@ for(x in years_correct){
   k = k + 1
 }
 
-stacked = matrix(unlist(total_cases), nrow = 11, ncol = 35)
+stacked = matrix(unlist(total_cases), nrow = 12, ncol = 35)
 
 palette <- RColorBrewer::brewer.pal(length(states),name = 'BuGn')
 
