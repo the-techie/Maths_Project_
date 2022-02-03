@@ -1,5 +1,3 @@
-library(dplyr)
-
 df1 = read.csv("/home/the-techie/Desktop/Maths_Project/data12.csv")
 df1
 
@@ -13,11 +11,17 @@ pupose = unique(df1$Pupose)
 total_crimes = c()
 
 for(x in states){
-  data = subset(df1, df1$STATE.UT == x & df1$YEAR == 2002 & df1$Pupose == "Total")
+  data = subset(df1, df1$STATE.UT == x & df1$YEAR == 2001 & df1$Pupose == "Total")
   print(x)
-  print(data$Grand.Total)
+  k = data$Grand.Total
   
-  total_crimes = c(total_crimes, data$Grand.Total)
+  if(length(k) == 0){
+    k = 0
+  }
+  
+  print(k)
+  
+  total_crimes = c(total_crimes, k)
   
 }
 palette <- RColorBrewer::brewer.pal(length(states),name = 'YlOrRd')
@@ -31,7 +35,14 @@ getGraph <- function(year){
   
   for(x in states){
     data = subset(df1, df1$STATE.UT == x & df1$YEAR == year & df1$Pupose == "Total")
-    total_crimes = c(total_crimes, data$Grand.Total)
+    
+    k = data$Grand.Total
+    
+    if(length(k) == 0){
+      k = 0
+    }
+    
+    total_crimes = c(total_crimes, k)
     
   }
   palette <- RColorBrewer::brewer.pal(length(states),name = 'BuGn')
@@ -42,7 +53,7 @@ getGraph <- function(year){
           ylab = "Crimes", main = title_name, col = palette)
 }
 
-years_correct = c(2001:2012)
+years_correct = 2001:2012
 
 for(x in years_correct){
   getGraph(x)
@@ -73,10 +84,6 @@ for(x in years_correct){
   total_cases[[k]] = res
   k = k + 1
 }
-
-stacked = as.matrix(total_cases)
-
-barplot(b)
 
 stacked = matrix(unlist(total_cases), nrow = 11, ncol = 35)
 
