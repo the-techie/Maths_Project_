@@ -42,7 +42,7 @@ getGraph <- function(year){
           ylab = "Crimes", main = title_name, col = palette)
 }
 
-years_correct = c(2002:2012)
+years_correct = c(2001:2012)
 
 for(x in years_correct){
   getGraph(x)
