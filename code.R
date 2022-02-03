@@ -85,3 +85,13 @@ palette <- RColorBrewer::brewer.pal(length(states),name = 'BuGn')
 barplot(stacked, names.arg = states, las=2, cex.names = 0.57, xlab = "State",
         ylab = "Crimes", main = "Yearwise cases distribution of each state", 
         col = palette, ylim = c(0, 20000))
+
+
+
+
+
+
+
+
+
+
